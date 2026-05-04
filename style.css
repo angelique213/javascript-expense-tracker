@@ -1,0 +1,93 @@
+/* This styles the whole page */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* Main title */
+h1 {
+  color: pink;
+  text-shadow: 2px 2px 4px rgba(164, 11, 111, 0.5);
+  
+}
+
+/* Form section styling */
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Label styling */
+label {
+  display: block; 
+  width: 100%; 
+  margin-bottom: 8px; 
+  color: black; 
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Input boxes, dropdown, and button */
+input,
+select,
+button {
+  display: block;
+  width: 100%; 
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  box-sizing: border-box; 
+}
+
+/* Input and dropdown styling */
+input,
+select {
+  border: 2px solid pink;
+  border-radius: 8px;
+  background-color: white;
+}
+
+/* Button styling */
+button {
+  background-color: pink;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* Button hover effect */
+button:hover {
+  color: black;
+  background-color: palevioletred;
+  
+}
+
+/* Expense list heading spacing */
+h2 {
+  color: black;
+  margin-top: 20px;
+}
+
+/* Expense list items */
+li {
+  background-color: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  list-style: none;
+  border: 1px solid #ddd;
+}
+
+/* Total amount styling */
+#totalAmount {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+}
