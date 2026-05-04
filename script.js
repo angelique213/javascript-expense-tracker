@@ -1,71 +1,107 @@
-// This array stores all expenses
+// Stores all expense entries
 let expenses = [];
 
-// Get important HTML elements
+// Controls whether total is shown in USD or PHP
+let displayCurrency = "USD";
+
+// Gets important elements from the page
 const expenseForm = document.getElementById("expenseForm");
 const expenseList = document.getElementById("expenseList");
 const totalAmount = document.getElementById("totalAmount");
 
-// This function runs when the form is submitted
+// Stores the conversion value
+const USD_TO_PHP_RATE = 60;
+
+// Runs when the form is submitted
 expenseForm.addEventListener("submit", function(event) {
 
   // Prevents page refresh
   event.preventDefault();
 
-  // Get values from the form
+  // Gets values from the form
   const name = document.getElementById("expenseName").value;
   const amount = Number(document.getElementById("expenseAmount").value);
   const category = document.getElementById("expenseCategory").value;
+  const currency = document.getElementById("expenseCurrency").value;
 
-  // Create one expense object
+  // Creates a new expense object
   const expense = {
     name: name,
     amount: amount,
-    category: category
+    category: category,
+    currency: currency
   };
 
-  // Add the new expense to the array
+  // Adds the expense to the array
   expenses.push(expense);
 
-  // Show updated expense list
+  // Updates the expense list
   displayExpenses();
 
-  // Update running total
+  // Updates the total
   updateTotal();
 
-  // Clear the form after submission
+  // Clears the form
   expenseForm.reset();
+
+  // Sets USD as default after reset
+  document.getElementById("expenseCurrency").value = "USD";
 });
 
-// This function displays all expenses on the page
+// Displays all expenses on the page
 function displayExpenses() {
 
-  // Clear old list first
+  // Clears old list items
   expenseList.innerHTML = "";
 
-  // Loop through each expense
+  // Loops through each expense
   expenses.forEach(function(expense) {
 
-    // Create a new list item
+    // Creates a new list item
     const listItem = document.createElement("li");
 
-    // Add text inside the list item
+    // Adds expense details to the list item
     listItem.textContent =
-      expense.name + " - ₱" + expense.amount + " (" + expense.category + ")";
+      expense.name + " - " + expense.currency + " " + expense.amount + " (" + expense.category + ")";
 
-    // Add the item to the page
+    // Adds the list item to the page
     expenseList.appendChild(listItem);
   });
 }
 
-// This function calculates the total
+// Calculates and displays the total
 function updateTotal() {
 
-  // Use reduce to add all expense amounts
-  const total = expenses.reduce(function(sum, expense) {
+  // Calculates total in USD first
+  const totalUSD = expenses.reduce(function(sum, expense) {
+
+    // Converts PHP to USD if needed
+    if (expense.currency === "PHP") {
+      return sum + (expense.amount / USD_TO_PHP_RATE);
+    }
+
+    // Adds USD directly
     return sum + expense.amount;
+
   }, 0);
 
-  // Display total on screen
-  totalAmount.textContent = "₱" + total.toFixed(2);
+  // Converts USD total to PHP
+  const totalPHP = totalUSD * USD_TO_PHP_RATE;
+
+  // Displays total based on selected currency
+  if (displayCurrency === "USD") {
+    totalAmount.textContent = "$" + totalUSD.toFixed(2);
+  } else {
+    totalAmount.textContent = "₱" + totalPHP.toFixed(2);
+  }
+}
+
+// Changes the total display currency
+function setDisplayCurrency(currency) {
+
+  // Updates selected display currency
+  displayCurrency = currency;
+
+  // Recalculates total
+  updateTotal();
 }

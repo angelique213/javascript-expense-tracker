@@ -32,6 +32,13 @@
         <option value="Other">Other</option>
       </select>
 
+      <!-- User selects currency -->
+      <label for="expenseCurrency">Currency:</label>
+      <select id="expenseCurrency">
+        <option value="USD">USD</option>
+        <option value="PHP">PHP</option>
+      </select>
+
       <!-- Submit button -->
       <button type="submit">Add Expense</button>
 
@@ -40,9 +47,18 @@
     <h2>Expense List</h2>
     <ul id="expenseList"></ul>
 
+
     <!-- This section will show the running total -->
     <h2>Total</h2>
-    <p id="totalAmount">₱0.00</p>
+
+    <!-- User chooses whether to see total in USD or PHP -->
+    <label for="totalCurrency">Show Total In:</label>
+    <select id="totalCurrency" onchange="setDisplayCurrency(this.value)">
+      <option value="USD">USD</option>
+      <option value="PHP">PHP</option>
+    </select>
+
+    <p id="totalAmount">$0.00</p>
 
   </main>
   <script src="script.js"></script>
