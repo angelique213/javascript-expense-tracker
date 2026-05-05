@@ -60,7 +60,7 @@ function displayExpenses() {
   expenses.forEach(function(expense, index) {
     const listItem = document.createElement("li");
 
-    // Adds expense details and an X delete button
+    // Adds expense details and a delete button
     listItem.innerHTML =
       "<span>" +
       expense.name + " - " + expense.currency + " " + expense.amount + " (" + expense.category + ")" +
@@ -69,6 +69,9 @@ function displayExpenses() {
 
     expenseList.appendChild(listItem);
   });
+
+  // Shows updated recursive count in console
+  console.log("Total number of expenses:", countExpenses(0));
 }
 
 // Removes one expense after confirmation
@@ -109,6 +112,15 @@ function updateTotal() {
 function setDisplayCurrency(currency) {
   displayCurrency = currency;
   updateTotal();
+}
+
+// Counts total expenses using recursion
+function countExpenses(index) {
+  if (index >= expenses.length) {
+    return 0;
+  }
+
+  return 1 + countExpenses(index + 1);
 }
 
 // Displays saved expenses when page first loads
