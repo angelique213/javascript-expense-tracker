@@ -11,7 +11,6 @@ body {
 h1 {
   color: pink;
   text-shadow: 2px 2px 4px rgba(164, 11, 111, 0.5);
-  
 }
 
 /* Form section styling */
@@ -24,10 +23,10 @@ form {
 
 /* Label styling */
 label {
-  display: block; 
-  width: 100%; 
-  margin-bottom: 8px; 
-  color: black; 
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  color: black;
   font-weight: bold;
   font-size: 18px;
 }
@@ -37,11 +36,11 @@ input,
 select,
 button {
   display: block;
-  width: 100%; 
+  width: 100%;
   padding: 12px;
   margin-bottom: 20px;
   font-size: 16px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 /* Input and dropdown styling */
@@ -52,7 +51,7 @@ select {
   background-color: white;
 }
 
-/* Button styling */
+/* Main button styling */
 button {
   background-color: pink;
   color: white;
@@ -62,27 +61,16 @@ button {
   font-weight: bold;
 }
 
-/* Button hover effect */
+/* Main button hover effect */
 button:hover {
   color: black;
   background-color: palevioletred;
-  
 }
 
-/* Expense list heading spacing */
+/* Section headings */
 h2 {
   color: black;
   margin-top: 20px;
-}
-
-/* Expense list items */
-li {
-  background-color: white;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  list-style: none;
-  border: 1px solid #ddd;
 }
 
 /* Total amount styling */
@@ -90,4 +78,55 @@ li {
   font-size: 24px;
   font-weight: bold;
   color: #222;
+}
+
+/* Expense list layout */
+li {
+  background-color: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  list-style: none;
+  border: 1px solid #ffb3c6;
+  box-shadow: 0 2px 5px rgba(214, 51, 132, 0.1);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Delete button styling */
+.delete-btn {
+  background: transparent;
+  border: none; 
+  box-shadow: none; 
+  outline: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  width: auto;
+  padding: 0;
+  margin: 0;
+}
+
+/* Removes hover background */
+.delete-btn:hover {
+  background: transparent;
+}
+
+/* Shows delete icon when hovering over list item */
+li:hover .delete-btn {
+  opacity: 1;
+}
+
+/* Delete image size */
+.delete-btn img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Slight hover effect for image only */
+.delete-btn:hover img {
+  transform: scale(1.1);
 }
