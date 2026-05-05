@@ -22,56 +22,38 @@ if (savedExpenses) {
   expenses = JSON.parse(savedExpenses);
 }
 
-//Runs when the form is submitted
+// Runs when the form is submitted
 expenseForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
-  try {
+  // Gets values from the form
+  const name = document.getElementById("expenseName").value;
+  const amount = Number(document.getElementById("expenseAmount").value);
+  const category = document.getElementById("expenseCategory").value;
+  const currency = document.getElementById("expenseCurrency").value;
 
-    // Gets values from the form
-    const name = document.getElementById("expenseName").value.trim();
-    const amount = Number(document.getElementById("expenseAmount").value);
-    const category = document.getElementById("expenseCategory").value;
-    const currency = document.getElementById("expenseCurrency").value;
+  // Creates a new expense object
+  const expense = {
+    name: name,
+    amount: amount,
+    category: category,
+    currency: currency
+  };
 
-    // Checks if expense name is empty
-    if (name === "") {
-      throw new Error("Expense name cannot be empty.");
-    }
+  // Adds the expense to the array
+  expenses.push(expense);
 
-    // Checks if amount is invalid
-    if (amount <= 0 || isNaN(amount)) {
-      throw new Error("Amount must be greater than 0.");
-    }
+  // Saves updated expenses to localStorage
+  localStorage.setItem("expenses", JSON.stringify(expenses));
 
-    // Creates a new expense object
-    const expense = {
-      name: name,
-      amount: amount,
-      category: category,
-      currency: currency
-    };
+  // Updates the screen
+  displayExpenses();
+  updateTotal();
+  updateChart();
 
-    //adds the expense to the array
-    expenses.push(expense);
-
-    // Saves updated expenses to localStorage
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-
-    //Updates the screen
-    displayExpenses();
-    updateTotal();
-    updateChart();
-
-    // Clears the form
-    expenseForm.reset();
-    document.getElementById("expenseCurrency").value = "USD";
-
-  } catch (error) {
-
-    // Shows error message
-    alert(error.message);
-  }
+  // Clears the form
+  expenseForm.reset();
+  document.getElementById("expenseCurrency").value = "USD";
 });
 
 // Displays all expenses on the page
@@ -82,7 +64,7 @@ function displayExpenses() {
   expenses.forEach(function(expense, index) {
     const listItem = document.createElement("li");
 
-    //Adds expense details and a delete button
+    // Adds expense details and a delete button
     listItem.innerHTML =
       "<span>" +
       expense.name + " - " + expense.currency + " " + expense.amount + " (" + expense.category + ")" +
@@ -92,7 +74,7 @@ function displayExpenses() {
     expenseList.appendChild(listItem);
   });
 
-  //Shows updated recursive count in console
+  // Shows updated recursive count in console
   console.log("Total number of expenses:", countExpenses(0));
 }
 
@@ -115,21 +97,15 @@ function deleteExpense(index) {
 // Calculates and displays the total
 function updateTotal() {
   const totalUSD = expenses.reduce(function(sum, expense) {
-
-    //Converts PHP to USD if needed
     if (expense.currency === "PHP") {
       return sum + (expense.amount / USD_TO_PHP_RATE);
     }
 
-    // Adds USD directly
     return sum + expense.amount;
-
   }, 0);
 
-  // Converts USD total to PHP
   const totalPHP = totalUSD * USD_TO_PHP_RATE;
 
-  // Displays total based on selected currency
   if (displayCurrency === "USD") {
     totalAmount.textContent = "$" + totalUSD.toFixed(2);
   } else {
@@ -145,23 +121,20 @@ function setDisplayCurrency(currency) {
 
 // Counts total expenses using recursion
 function countExpenses(index) {
-
-  // Stops recursion at end of array
   if (index >= expenses.length) {
     return 0;
   }
 
-  // Counts one expense plus the next
   return 1 + countExpenses(index + 1);
 }
 
 // Creates and updates the expense chart
 function updateChart() {
 
-  // Stores category totals
+  // Creates an object to store category totals
   const categoryTotals = {};
 
-  // Loops through all expenses
+  // Adds each expense amount into its category
   expenses.forEach(function(expense) {
 
     let amountUSD = expense.amount;
@@ -171,7 +144,7 @@ function updateChart() {
       amountUSD = expense.amount / USD_TO_PHP_RATE;
     }
 
-    // Adds totals into matching category
+    // Adds totals by category
     if (categoryTotals[expense.category]) {
       categoryTotals[expense.category] += amountUSD;
     } else {
@@ -185,15 +158,15 @@ function updateChart() {
   // Gets category totals
   const data = Object.values(categoryTotals);
 
-  // Gets the chart canvas
+  // Gets chart canvas
   const chartCanvas = document.getElementById("expenseChart");
 
-  // Removes old chart before redrawing
+  // Destroys old chart before creating new one
   if (expenseChart) {
     expenseChart.destroy();
   }
 
-  // Creates a new pie chart
+  // Creates new pie chart
   expenseChart = new Chart(chartCanvas, {
     type: "pie",
     data: {
@@ -202,35 +175,11 @@ function updateChart() {
         label: "Expenses by Category",
         data: data
       }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-
-      plugins: {
-        legend: {
-          position: "top",
-          labels: {
-            font: {
-              size: 24
-            },
-            padding: 20
-          }
-        },
-
-        title: {
-          display: true,
-          text: "Expenses by Category",
-          font: {
-            size: 28
-          }
-        }
-      }
     }
   });
 }
 
-//displays saved expenses when page first loads
+// Displays saved expenses when page first loads
 displayExpenses();
 updateTotal();
 updateChart();
