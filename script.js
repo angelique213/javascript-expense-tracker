@@ -1,4 +1,4 @@
-// Stores all expense entries
+// Stores all expense entries.
 let expenses = [];
 
 // Controls whether total is shown in USD or PHP
@@ -22,13 +22,15 @@ if (savedExpenses) {
   expenses = JSON.parse(savedExpenses);
 }
 
-//Runs when the form is submitted
+
+
+//Runs when the form is submitted..
 expenseForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
   try {
 
-    // Gets values from the form
+    // Gets values from the form.
     const name = document.getElementById("expenseName").value.trim();
     const amount = Number(document.getElementById("expenseAmount").value);
     const category = document.getElementById("expenseCategory").value;
@@ -55,7 +57,8 @@ expenseForm.addEventListener("submit", function(event) {
     //adds the expense to the array
     expenses.push(expense);
 
-    // Saves updated expenses to localStorage
+
+    // Saves updated expenses to localStorage..
     localStorage.setItem("expenses", JSON.stringify(expenses));
 
     //Updates the screen
@@ -63,7 +66,7 @@ expenseForm.addEventListener("submit", function(event) {
     updateTotal();
     updateChart();
 
-    // Clears the form
+    // Clears the form.
     expenseForm.reset();
     document.getElementById("expenseCurrency").value = "USD";
 
@@ -74,7 +77,7 @@ expenseForm.addEventListener("submit", function(event) {
   }
 });
 
-// Displays all expenses on the page
+// Displays all expenses on the page.
 function displayExpenses() {
   expenseList.innerHTML = "";
 
@@ -112,7 +115,9 @@ function deleteExpense(index) {
   }
 }
 
-// Calculates and displays the total
+
+
+// Calculates and displays the total..
 function updateTotal() {
   const totalUSD = expenses.reduce(function(sum, expense) {
 
@@ -143,7 +148,10 @@ function setDisplayCurrency(currency) {
   updateTotal();
 }
 
-// Counts total expenses using recursion
+
+
+
+// Counts total expenses using recursion.
 function countExpenses(index) {
 
   // Stops recursion at end of array
@@ -154,6 +162,9 @@ function countExpenses(index) {
   // Counts one expense plus the next
   return 1 + countExpenses(index + 1);
 }
+
+
+
 
 // Creates and updates the expense chart
 function updateChart() {

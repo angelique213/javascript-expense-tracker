@@ -5,7 +5,7 @@ This project is a simple Expense Tracker made with HTML, CSS, and JavaScript. It
 
 I made this project to practice JavaScript skills like functions, arrays, objects, DOM manipulation, localStorage, recursion, Chart.js, and error handling.
 
-[Software Demo Video](PASTE YOUR VIDEO LINK HERE)
+[Software Demo Video](https://www.youtube.com/watch?v=lWzqxMP-WvM)
 
 Development Environment
 HTML
